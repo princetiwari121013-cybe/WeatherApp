@@ -1,0 +1,32 @@
+.App {
+background: linear-gradient(135deg, #EA7466, #ED9A58, #F1C6A3);
+}
+
+@media (max-width: 40rem) {
+
+    #WeatherContainer {
+        width: 100%;
+    }
+
+    #WeatherContainer > div:first-child {
+        width: 88%;
+
+        margin-left: auto;
+        margin-right: auto;
+
+        grid-template-columns: 1fr;
+
+        gap: 4vh;
+    }
+
+    #Weekday {
+        grid-column: auto;
+    }
+
+    .HourlyBox {
+        width: 88%;
+
+        margin-left: auto;
+        margin-right: auto;
+    }
+}
