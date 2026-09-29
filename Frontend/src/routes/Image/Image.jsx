@@ -1,10 +1,19 @@
-import { useQuery } from '@tanstack/react-query';
+import { useQuery } from "@tanstack/react-query";
 
-import Sunny from "./IMG/1.png";
-import Moon from "./IMG/2.png";
-import Rain from "./IMG/3.jpg";
-import Cloudy from "./IMG/4.png";
-import Snow from "./IMG/5.png";
+import Sunny from "./IMG/sunny.png";
+import PartlyCloudy from "./IMG/partly_cloudy.png";
+import Cloudy from "./IMG/cloudy.png";
+
+import Moon from "./IMG/clear_night.png";
+import PartlyCloudyNight from "./IMG/partly_cloudy_night.png";
+import CloudyNight from "./IMG/cloudy_night.png";
+
+import Rain from "./IMG/rainy.png";
+import RainyNight from "./IMG/rainy_night.png";
+
+import Snow from "./IMG/snowy.png";
+import Thunderstorm from "./IMG/thunderstorm.png";
+import Foggy from "./IMG/foggy.png";
 
 
 function Image({ selectedState, selectedCity }) {
@@ -24,7 +33,7 @@ function Image({ selectedState, selectedCity }) {
         queryFn: async () => {
 
             const response = await fetch(
-                `http://10.118.169.102:5000/api/Weather?state=${encodeURIComponent(selectedState)}&city=${encodeURIComponent(selectedCity)}`
+                `http://localhost:5000/api/Weather?state=${encodeURIComponent(selectedState)}&city=${encodeURIComponent(selectedCity)}`
             );
 
             if (!response.ok) {
@@ -89,7 +98,7 @@ function Image({ selectedState, selectedCity }) {
 
 
     // =========================
-    // WEATHER IMAGE + NAME
+    // WEATHER IMAGE DATA
     // =========================
 
     const getWeatherData = () => {
@@ -114,7 +123,7 @@ function Image({ selectedState, selectedCity }) {
 
         if (isDay === 0) {
 
-            // Clear night
+            // Clear Night
             if (weatherCode === 0) {
 
                 return {
@@ -124,37 +133,47 @@ function Image({ selectedState, selectedCity }) {
             }
 
 
-            // Cloudy night
-            if (weatherCode >= 1 && weatherCode <= 3) {
+            // Partly Cloudy Night
+            if (weatherCode === 1 || weatherCode === 2) {
 
                 return {
-                    image: Cloudy,
+                    image: PartlyCloudyNight,
+                    name: "Partly Cloudy Night"
+                };
+            }
+
+
+            // Cloudy Night
+            if (weatherCode === 3) {
+
+                return {
+                    image: CloudyNight,
                     name: "Cloudy Night"
                 };
             }
 
 
-            // Rain night
+            // Fog
+            if (weatherCode === 45 || weatherCode === 48) {
+
+                return {
+                    image: Foggy,
+                    name: "Foggy"
+                };
+            }
+
+
+            // Rain / Drizzle
             if (weatherCode >= 51 && weatherCode <= 67) {
 
                 return {
-                    image: Rain,
+                    image: RainyNight,
                     name: "Rain"
                 };
             }
 
 
-            // Rain showers night
-            if (weatherCode >= 80 && weatherCode <= 82) {
-
-                return {
-                    image: Rain,
-                    name: "Rain Showers"
-                };
-            }
-
-
-            // Snow night
+            // Snow
             if (weatherCode >= 71 && weatherCode <= 77) {
 
                 return {
@@ -164,7 +183,17 @@ function Image({ selectedState, selectedCity }) {
             }
 
 
-            // Snow showers night
+            // Rain Showers
+            if (weatherCode >= 80 && weatherCode <= 82) {
+
+                return {
+                    image: RainyNight,
+                    name: "Rain Showers"
+                };
+            }
+
+
+            // Snow Showers
             if (weatherCode >= 85 && weatherCode <= 86) {
 
                 return {
@@ -174,7 +203,17 @@ function Image({ selectedState, selectedCity }) {
             }
 
 
-            // Default night
+            // Thunderstorm
+            if (weatherCode >= 95 && weatherCode <= 99) {
+
+                return {
+                    image: Thunderstorm,
+                    name: "Thunderstorm"
+                };
+            }
+
+
+            // Default Night
             return {
                 image: Moon,
                 name: "Clear Night"
@@ -186,7 +225,7 @@ function Image({ selectedState, selectedCity }) {
         // DAY
         // =========================
 
-        // Clear sky
+        // Clear Sky
         if (weatherCode === 0) {
 
             return {
@@ -196,12 +235,32 @@ function Image({ selectedState, selectedCity }) {
         }
 
 
+        // Partly Cloudy
+        if (weatherCode === 1 || weatherCode === 2) {
+
+            return {
+                image: PartlyCloudy,
+                name: "Partly Cloudy"
+            };
+        }
+
+
         // Cloudy
-        if (weatherCode >= 1 && weatherCode <= 3) {
+        if (weatherCode === 3) {
 
             return {
                 image: Cloudy,
                 name: "Cloudy"
+            };
+        }
+
+
+        // Fog
+        if (weatherCode === 45 || weatherCode === 48) {
+
+            return {
+                image: Foggy,
+                name: "Foggy"
             };
         }
 
@@ -216,16 +275,6 @@ function Image({ selectedState, selectedCity }) {
         }
 
 
-        // Rain showers
-        if (weatherCode >= 80 && weatherCode <= 82) {
-
-            return {
-                image: Rain,
-                name: "Rain Showers"
-            };
-        }
-
-
         // Snow
         if (weatherCode >= 71 && weatherCode <= 77) {
 
@@ -236,7 +285,17 @@ function Image({ selectedState, selectedCity }) {
         }
 
 
-        // Snow showers
+        // Rain Showers
+        if (weatherCode >= 80 && weatherCode <= 82) {
+
+            return {
+                image: Rain,
+                name: "Rain Showers"
+            };
+        }
+
+
+        // Snow Showers
         if (weatherCode >= 85 && weatherCode <= 86) {
 
             return {
@@ -246,7 +305,17 @@ function Image({ selectedState, selectedCity }) {
         }
 
 
-        // Default
+        // Thunderstorm
+        if (weatherCode >= 95 && weatherCode <= 99) {
+
+            return {
+                image: Thunderstorm,
+                name: "Thunderstorm"
+            };
+        }
+
+
+        // Default Day
         return {
             image: Sunny,
             name: "Sunny"
@@ -254,7 +323,10 @@ function Image({ selectedState, selectedCity }) {
     };
 
 
-    // Weather data nikalo
+    // =========================
+    // GET WEATHER IMAGE
+    // =========================
+
     const weatherData = getWeatherData();
 
 

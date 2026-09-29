@@ -22,7 +22,7 @@ function Header({
         queryFn: async () => {
 
             const res = await fetch(
-                "http://10.118.169.102:5000/api/Weather/locations"
+                "http://localhost:5000/api/Weather/locations"
             )
 
 

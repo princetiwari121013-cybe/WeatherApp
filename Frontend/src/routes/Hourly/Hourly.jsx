@@ -17,7 +17,7 @@ function Hourly({ selectedState, selectedCity }) {
         queryFn: async () => {
 
             const response = await fetch(
-                `http://10.118.169.102:5000/api/Weather/forecast?state=${encodeURIComponent(selectedState)}&city=${encodeURIComponent(selectedCity)}`
+                `http://localhost:5000/api/Weather/forecast?state=${encodeURIComponent(selectedState)}&city=${encodeURIComponent(selectedCity)}`
             );
 
             if (!response.ok) {
